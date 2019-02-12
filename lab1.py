@@ -54,22 +54,45 @@ def draw_tree(ax,n,orig,x,y):
         draw_tree(ax,n-1,((orig[0]-x,orig[1]-y)), x/2, y-1)
         draw_tree(ax,n-1,((orig[0]+x,orig[1]-y)), x/2, y-1)
        
-def draw_in_circles(ax,n,center,radius):
+def draw_in_circles(ax,n,center,rad):
     if n>0:
-        x,y = circle(center,radius)
-        ax.plot(x,y,color='k')
-        #ax.plot(x,y+radius,color='k')
-        #ax.plot(x,y-radius,color='k')
-        #ax.plot(x+radius,y,color='k')
-        #ax.plot(x-radius,y,color='k')
-        draw_in_circles(ax,n-1,center,radius/3)        
         
-
-"""
+        #creates the original circle
+        x,y = circle(center,rad)
+        ax.plot(x,y,color='k')
+        
+        #creates center circle
+        x,y = circle((center[0],center[1]),rad/3)
+        ax.plot(x,y,color='k')
+        draw_in_circles(ax,n-1,(center[0],center[1]),rad/3) 
+        
+        #creates the left circle
+        x,y = circle((center[0]-(rad/3)*2,center[1]),rad/3)
+        ax.plot(x,y,color='k')
+        draw_in_circles(ax,n-1,(center[0]-(rad/3)*2,center[1]),rad/3)
+        
+        #creates the right circle
+        x,y = circle((center[0]+(rad/3)*2,center[1]),rad/3)
+        ax.plot(x,y,color='k')
+        draw_in_circles(ax,n-1,(center[0]+(rad/3)*2,center[1]),rad/3)
+        
+        #creates bottom circle
+        x,y = circle((center[0],center[1]-(rad/3)*2),rad/3)
+        ax.plot(x,y,color='k')
+        draw_in_circles(ax,n-1,(center[0],center[1]-(rad/3)*2),rad/3)
+        
+        #creates top circle
+        x,y = circle((center[0],center[1]+(rad/3)*2),rad/3)
+        ax.plot(x,y,color='k')
+        draw_in_circles(ax,n-1,(center[0],center[1]+(rad/3)*2),rad/3)
+        
+        
 plt.close("all") 
+fig, ax = plt.subplots()
+
+
 #coordinates for the original square
 coord = [800,800] 
-fig, ax = plt.subplots()
 #1a uses only 2 so it only creates 2 squares
 #draw_squares(ax,2,coord,200)
 
@@ -79,17 +102,10 @@ fig, ax = plt.subplots()
 #1c uses only 4 so it only creates 4 squares
 #draw_squares(ax,4,coord,200)
 
-ax.set_aspect(1.0)
-ax.axis('on')
-plt.show()
-fig.savefig('squares.png')
 
-
-plt.close("all") 
-fig, ax = plt.subplots() 
 #2a calls the method 5 times but the circle keeps getting smaller because
 #the radius is been multiplied by 'w'
-draw_circles(ax, 10, [100,0], 100,.5)
+#draw_circles(ax, 10, [100,0], 100,.5)
  
 #2b calls the method 45 times
 #draw_circles(ax, 45, [100,0], 100,.9)
@@ -97,35 +113,32 @@ draw_circles(ax, 10, [100,0], 100,.5)
 #2c calls the method 100 times
 #draw_circles(ax, 100, [100,0], 100,.95)
 
-ax.set_aspect(1.0)
-ax.axis('on')
-plt.show()
-fig.savefig('circles.png')
 
-
-plt.close("all")
- #initial point for binary tree
+#initial point for binary tree
 origin = [0,0]
-fig, ax = plt.subplots()
 #3a calls the method 3 times so there are 3 levels
-draw_tree(ax,3,origin,5,5)
+#draw_tree(ax,3,origin,5,5)
 
 #3b calls the method 4 times so there are 4 levels
 #draw_tree(ax,4,origin,5,5)
 
 #3c#3a calls the method 7 times so there are 7 levels
-draw_tree(ax,7,origin,5,5) 
+#draw_tree(ax,10,origin,8,8) 
+
+
+#4a calls the method 2 times 
+#draw_in_circles(ax, 2, [100,0], 100)
+
+#4b calls the method 3 times
+draw_in_circles(ax, 3, [100,0], 100)
+
+#4c calls the method times
+#draw_in_circles(ax, 4, [100,0], 100)
 
 ax.set_aspect(1.0)
 ax.axis('on')
 plt.show()
-#fig.savefig('tree.png')   
-"""
+fig.savefig('lab1.png')   
 
-plt.close("all") 
-fig, ax = plt.subplots() 
-draw_in_circles(ax, 4, [100,0], 200)
-ax.set_aspect(1.0)
-ax.axis('on')
-plt.show()
-fig.savefig('in_circles.png')
+
+
