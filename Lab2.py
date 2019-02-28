@@ -162,54 +162,115 @@ def modQuickSort(L,median):
             Append(L2, temp.item)#insert n in L2
             count +=1
          temp = temp.next
-    if(getLength(L1) < median): #if median is not in L1, then search in L2
+    if getLength(L1) < median: #if median is not in L1, then search in L2
         count +=1
-        return modQuickSort(L2, median-getLength(L1)-1)
-    elif(getLength(L2) < median): #if the median not in L2 
+        return modQuickSort(L2,getLength(L1)-1)
+    elif getLength(L2) < median: #if the median not in L2 
         count +=1
         return modQuickSort(L1,median)
     else: #if it isnt in L1 or L2
-        return median
+        return pivot
     
         
  
 
+def sortList(l,r):
+	result = None
+
+	if l is None or getLength(l) < 1:
+		return r
+	if r is None or getLength(r) < 1:
+		return l
+
+	if l.head.item <= r.head.item:
+		result = l.head
+		temp = l.head.next
+		tempL = List()
+		tempL.head = temp
+		result.next = sortList(tempL, r).head
+
+	else:
+		result = r.head
+		temp = r.head.next
+		tempL = List()
+		tempL.head = temp
+		result.next = sortList(l, tempL).head
+
+	L = List()
+	L.head = result
+	return L
+
+
 def mergeSort(L):
-    if getLength(L) <= 1: #base case
-        return L
-    if getLength(L) > 1:
-        L1 = List() #small list
-        L2 = List() #large list
-        mid = (getLength(L) // 2)
-        temp = L.head
-        count = 0
-        while temp != None: 
-            if count < mid:
-                Append(L1, temp.item)
-                count +=1
-            else:
-                Append(L2,temp.item)
-                count += 1
-            temp = temp.next    
-    mergeSort(L1)
-    mergeSort(L2)
-    
-    newList = List()
-    while newList != getLength(L):
-        if IsEmpty(L1):
-            Append(newList,L2.head.item)
-            L2.head = L2.head.next
-        elif IsEmpty(L2):
-            Append(newList,L1.head.item)
-            L1.head = L1.head.next
-        elif L1.head.item < L2.head.item:
-            Append(newList,L1.head.item)
-            L1.head = L1.head.next
-        else:
-            Append(newList,L2.head.item)
-            L2.head = L2.head.next
-    return newList   
+	if L is None or getLength(L)<2:
+		return L
+
+	mid = ElementAt(L,(getLength(L) // 2)-1)
+	nextMid = mid.next
+
+	mid.next = None
+
+	left = mergeSort(L)
+	R = List()
+	R.head = nextMid
+	right = mergeSort(R)
+
+	sortedList = sortList(left, right)
+	return sortedList
  
+    
+def sortList1(l,r):
+	print("L: ")
+	Print(l)
+	print("R: ")
+	Print(r)
+	result = None
+
+	if l is None or getLength(l) < 1:
+		return r
+	if r is None or getLength(r) < 1:
+		return l
+
+	if l.head.item <= r.head.item:
+		result = l.head
+		temp = l.head.next
+		tempL = List()
+		tempL.head = temp
+		result.next = sortList(tempL, r).head
+
+	else:
+		result = r.head
+		temp = r.head.next
+		tempL = List()
+		tempL.head = temp
+		result.next = sortList(l, tempL).head
+
+	L = List()
+	L.head = result
+	return L
+
+
+def mergeSort1(L):
+	Print(L)
+	if L is None or getLength(L)<2:
+		return L
+
+	mid = ElementAt(L,(getLength(L) // 2)-1)
+	nextMid = mid.next
+
+	print("mid: ", mid.item)
+	print("nextMid: ", nextMid.item)
+	
+	mid.next = None
+
+	left = mergeSort(L)
+	R = List()
+	R.head = nextMid
+	right = mergeSort(R)
+
+	sortedList = sortList1(left, right)
+	return sortedList
+
 def Copy(L):
     copyList = List() #create new list
     temp = L.head
@@ -225,18 +286,17 @@ def ElementAt(L,n):
     else:
         temp = L.head
         for i in range(n): #iterate n times
-            if i == n: #when i is the same as n then return the item in temp
-                return temp.item
             temp = temp.next
+        return temp
         
 
 def Median(L):
     C = Copy(L)
-    bubbleSort(C)
+    #bubbleSort(C)
     #quickSort(C)
     #mergeSort(C)
     #modQuickSort(C,getLength(L)//2)
-    return ElementAt(L,getLength(L)//2)
+    return ElementAt(C,getLength(C)//2)
        
 L = List()
 
@@ -244,13 +304,41 @@ for i in range(5):
     randnum = random.randint(0,10)
     Append(L,randnum)
     
-Print(L)
+L1 =L
 
-#Median(L)
-#L =mergeSort(L)
-#L = quickSort(L)
-bubbleSort(L)  
-#modQuickSort(L,getLength(L)//2)      
+
+print("The original list is: ")
 Print(L)
-            
+print()
+'''
+#BUBBLESORT
+print("The median with bubble sort is: ")
+bubbleSort(L)
+medBubble = Median(L)
+print(medBubble.item)
+
+#MERGESORT
+print("The median with merge sort is: ")
+L=mergeSort(L)
+medMerge = Median(L)
+print(medMerge.item)
+print()
+'''
+
+#QUICKSORT
+print("The median with quick sort is: ")
+L = quickSort(L)
+medQuick = Median(L)
+print(medQuick.item)
+print()
+'''
+
+print("The median with modified quick sort is: ")
+medModQuick = modQuickSort(L, getLength(L)//2)
+medModQuick = Median(L)
+print(medModQuick.item)
+'''
+
+print("The sorted list is: ")
+Print(L)
     
