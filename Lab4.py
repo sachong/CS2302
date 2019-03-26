@@ -4,7 +4,7 @@
 MW 10:30-11:50
 Olac Fuentes
 TAs: Anindita Nath and Maliheh Zargaran
-
+3/25/2019
 Purpose of this lab was to learn how to use B-Trees. We computed the height,
 extract to a list, return the max, min values form the tree, return number of nodes per depth,
 print the nodes per depth, return the nodes that were full, and leafs also, and return where the
