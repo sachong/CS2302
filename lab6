@@ -1,9 +1,12 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Mon Apr 15 15:25:22 2019
 
-@author: sachong
+"""
+@author: Samuel Chong
+MW 10:30-11:50
+Olac Fuentes
+TAs: Anindita Nath and Maliheh Zargaran
+4/16/2019
+The purpose of this lab was to create a maze with a only one path. This will be done using disjoint
+set forests.
 """
 
 import matplotlib.pyplot as plt
@@ -26,10 +29,10 @@ def find_c(S,i): #Find with path compression
 def DisjointSetForest(size):
     return np.zeros(size,dtype=np.int)-1  
 
-def numSets(S):
+def numSets(S): #return the number of sets
     count = 0
     for i in S:
-        if i < 0:
+        if i < 0: #if it is -1 then it is a root so add 1
             count += 1
     return count
 
@@ -100,12 +103,12 @@ draw_maze(walls,maze_rows,maze_cols,cell_nums=True)
 
 newS = DisjointSetForest(maze_rows * maze_cols)
 while numSets(newS) > 1:
-     d = random.randint(0,len(walls)-1)
-     if union(newS, walls[d][0], walls[d][1]) is not False:
-         walls.pop(d)
+     d = random.randint(0,len(walls)-1) #chooses a random integer
+     if union(newS, walls[d][0], walls[d][1]) is not False: #if they are part of two different sets
+         walls.pop(d)                                       #then pop the wall so they become one set
 
 while numSets(newS) > 1:
-     d = random.randint(0,len(walls)-1)
+     d = random.randint(0,len(walls)-1) #choosez a random integer
      if union_c(newS, walls[d][0], walls[d][1]) is not False:
          walls.pop(d)
 '''
