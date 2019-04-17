@@ -56,6 +56,25 @@ def union_c(S,i,j):
         return True
     return False
 
+def unionSize(S,i,j):
+    # Joins i's tree and j's tree, if they are different
+    # Uses path compression
+    ri = find_c(S,i) 
+    rj = find_c(S,j)
+    if ri!=rj: #if different root
+        if S[ri] > S[rj]: #if ri is bigger than rj then rj goes to ri
+            S[rj] += S[ri]
+            S[ri] = rj
+            return True
+        else:
+            S[ri] += S[rj] #if rj is bigger than ri then ri goes to rj
+            S[rj] = ri
+            return True
+    return False
+
+
+
+
 def draw_maze(walls,maze_rows,maze_cols,cell_nums=False):
     fig, ax = plt.subplots()
     for w in walls:
@@ -112,15 +131,15 @@ while numSets(newS) > 1:
 end = time.time()                                      
 print("The running time for standard union is: ", end - start )
 
-
+'''
 start_c = time.time()
 while numSets(newS) > 1:
      d = random.randint(0,len(walls)-1) #choosez a random integer
-     if union_c(newS, walls[d][0], walls[d][1]) is not False:
+     if unionSize(newS, walls[d][0], walls[d][1]) is not False:
          walls.pop(d)
 end_c = time.time()
 print("The running time for compression is: ", end_c - start_c) 
-      
+''' 
 
 
 
