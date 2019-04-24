@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Wed Apr 10 20:32:32 2019
-
-@author: sachong
+@author: Samuel Chong
+MW 10:30-11:50
+Olac Fuentes
+TAs: Anindita Nath and Maliheh Zargaran
+Compares 2 words and checks the similarities using bst or hash table
 """
 
 import numpy as np
