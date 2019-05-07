@@ -4,7 +4,6 @@
 MW 10:30-11:50
 Olac Fuentes
 TAs: Anindita Nath and Maliheh Zargaran
-5/6/2019
 The purpose for this lab was to print the adjacency 
 list from a graph, print the path by using breadth-first
 search, depth-first search and depth-first recursively, 
