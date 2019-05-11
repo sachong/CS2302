@@ -43,15 +43,14 @@ def equalTrig(trig):
 
 def partition(S):
     if sum(S) %2 != 0:
-        return False
+         print("No partition exists")
     if sum(S) %2 == 0:
         newSet = S.copy() #create a copy of S
         e, rem = subsetsum(S,newSet,len(S)-1,sum(S)//2) #check if equal
         if e:
             print("Subset 1: ",newSet)
             print("Subset 2: ",rem)
-    else:
-        return False
+    return
     
     
 trigFunc = ['sin(t)', 'cos(t)', 'tan(t)', 'sec(t)', '-sin(t)', '-cos(t)',
