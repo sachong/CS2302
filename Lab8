@@ -1,0 +1,70 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+@author: Samuel Chong
+MW 10:30-11:50
+Olac Fuentes
+TAs: Anindita Nath and Maliheh Zargaran
+Purpose was to discover if the trigonometric identities are equal to others
+and to use backtracking in a set and determine if there is partition
+"""
+
+import random
+import numpy as np
+from mpmath import *
+
+def equal(f1, f2,tries=1000,tolerance=0.0001):
+    for i in range(tries):
+        t = random.random()
+        y1 = eval(f1)
+        y2 = eval(f2)
+        if np.abs(y1-y2)>tolerance:
+            return False
+    return True
+
+def subsetsum(S,S1,last,goal):
+    if goal ==0:
+        return True, []
+    if goal<0 or last<0:
+        return False, []
+    res, subset = subsetsum(S,S1,last-1,goal-S[last]) # Take S[last]
+    if res:
+        subset.append(S[last]) #append to one subset
+        S1.remove(S[last]) #remove from S1 because it is part from the other subset
+        return True, subset
+    else:
+        return subsetsum(S,S1,last-1,goal) # Don't take S[last]
+    
+def equalTrig(trig):
+    for i in range(len(trig)):
+        for j in range(1,len(trig)):
+            if equal(trig[i], trig[j],tries=1000,tolerance=0.0001):
+                print(trig[i], " and ", trig[j], " are equal")
+
+def partition(S):
+    if sum(S) %2 != 0:
+        return False
+    if sum(S) %2 == 0:
+        newSet = S.copy() #create a copy of S
+        e, rem = subsetsum(S,newSet,len(S)-1,sum(S)//2) #check if equal
+        if e:
+            print("Subset 1: ",newSet)
+            print("Subset 2: ",rem)
+    else:
+        return False
+    
+    
+trigFunc = ['sin(t)', 'cos(t)', 'tan(t)', 'sec(t)', '-sin(t)', '-cos(t)',
+            '-tan(t)', 'sin(-t)','cos(-t)', 'tan(-t)', 'sin(t)/cos(t)',
+            '2*sin(t/2)*cos(t/2)', 'sin(t)*sin(t)','1-cos(t)*cos(t)', '((1-cos(2*t))/2)', '1/cos(t)']
+
+for i in range(len(trigFunc)):
+    for j in range(1,len(trigFunc)):
+        if equal(trigFunc[i], trigFunc[j],tries=1000,tolerance=0.0001):
+            print(trigFunc[i], " and ", trigFunc[j], " are equal")
+
+
+S = [2,4,5,9,12]
+print("Set is: ", S)
+partition(S)
+
